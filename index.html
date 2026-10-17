@@ -1,0 +1,799 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#63351f">
+<title>Ayo Daily</title>
+<style>
+  :root {
+    color-scheme: light;
+    --cream: #fff5dc;
+    --ink: #382317;
+    --green: #215c45;
+    --gold: #f4bc54;
+    --wood: #79452b;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    min-height: 100vh;
+    min-height: 100dvh;
+    background:
+      radial-gradient(ellipse at top, #fff4d7, transparent 65%),
+      #eed6ac;
+    color: var(--ink);
+    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 24px 12px;
+  }
+
+  button { font: inherit; touch-action: manipulation; }
+  button:focus-visible, a:focus-visible {
+    outline: 4px solid #087c99;
+    outline-offset: 4px;
+  }
+
+  .app { width: min(100%, 780px); margin: auto; }
+  header { text-align: center; }
+  .eyebrow {
+    color: var(--green);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .19em;
+    text-transform: uppercase;
+  }
+  h1 {
+    margin: 4px 0;
+    font-family: Georgia, serif;
+    font-size: clamp(2.7rem, 9vw, 4rem);
+  }
+  .subtitle { margin: 0 0 22px; line-height: 1.5; }
+
+  .toolbar {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
+  .button {
+    min-height: 48px;
+    padding: 12px 18px;
+    border: 2px solid transparent;
+    border-radius: 14px;
+    background: var(--green);
+    color: white;
+    cursor: pointer;
+    font-weight: 750;
+  }
+  .button.secondary {
+    background: var(--cream);
+    color: var(--ink);
+    border-color: #b88650;
+  }
+  .button[aria-pressed="true"] {
+    background: var(--green);
+    border-color: var(--green);
+    color: white;
+    box-shadow: 0 3px 0 #133d2c;
+  }
+  .button:hover { filter: brightness(1.08); }
+
+  .challenge {
+    text-align: center;
+    min-height: 42px;
+    font-size: .88rem;
+    line-height: 1.5;
+    margin-bottom: 12px;
+  }
+
+  .scores {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  .store {
+    background: #fff8e9;
+    border: 2px solid #d9b984;
+    border-radius: 20px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .store.active { border-color: var(--green); }
+  .store small { display: block; color: #745743; }
+  .store strong { font-size: 2.2rem; color: var(--green); }
+
+  .board {
+    background: var(--wood);
+    border: 5px solid #5d321e;
+    border-radius: 28px;
+    padding: 16px;
+    box-shadow: 0 12px 0 #452617, 0 20px 30px #63351f25;
+    color: var(--cream);
+    position: relative;
+  }
+  .board::before {
+    content: "";
+    display: block;
+    height: 7px;
+    margin-bottom: 12px;
+    border-radius: 4px;
+    background: repeating-linear-gradient(
+      120deg, #edb953 0 12px, #215c45 12px 24px,
+      #c36a3a 24px 36px, #fff0ce 36px 48px
+    );
+  }
+  .row-label {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    font-size: .8rem;
+    margin: 9px 3px;
+    letter-spacing: .025em;
+  }
+  .pits {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 9px;
+  }
+  .divider {
+    height: 2px;
+    background: #aa7450;
+    margin: 17px 0;
+  }
+  .pit {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-width: 0;
+    min-height: 88px;
+    padding: 5px 2px;
+    border-radius: 45%;
+    border: 2px solid #b87c4d;
+    background: #47291d;
+    color: var(--cream);
+    box-shadow: inset 0 5px 9px #23130d80;
+    opacity: 1;
+  }
+  .pit.legal {
+    border-color: var(--gold);
+    background: #53341e;
+    cursor: pointer;
+  }
+  .pit.legal:hover {
+    background: #6a4725;
+    transform: translateY(-2px);
+  }
+  .pit.last { outline: 3px solid #f1d49d; outline-offset: 2px; }
+  .pit-count { font-weight: 850; font-size: 1.55rem; line-height: 1.2; }
+  .seeds {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 3px;
+    max-width: 40px;
+    min-height: 18px;
+    margin-top: 5px;
+  }
+  .seed {
+    width: 6px;
+    height: 8px;
+    border-radius: 60% 40% 55% 45%;
+    background: #edbd71;
+    box-shadow: inset -1px -1px 1px #a16a30;
+    transform: rotate(20deg);
+  }
+  .pit-number {
+    font-size: .65rem;
+    color: #dfbd94;
+    margin-top: 4px;
+  }
+
+  .status-panel {
+    text-align: center;
+    margin-top: 30px;
+    padding: 18px;
+    background: #fff8e9;
+    border-radius: 20px;
+    border: 1px solid #d9b984;
+  }
+  #status { margin: 0; font-size: 1.13rem; font-weight: 800; }
+  #detail { margin: 8px 0 0; line-height: 1.5; font-size: .9rem; }
+  #result { margin-top: 16px; }
+  #result h2 { margin: 0 0 8px; font-family: Georgia, serif; }
+  #result p { line-height: 1.5; }
+  footer { text-align: center; margin-top: 20px; font-size: .8rem; color: #73533e; }
+
+  dialog {
+    width: min(92vw, 600px);
+    max-height: 85vh;
+    padding: 24px;
+    border: 2px solid #b88650;
+    border-radius: 22px;
+    background: #fff8e9;
+    color: var(--ink);
+    box-shadow: 0 20px 70px #0005;
+  }
+  dialog::backdrop { background: #25170cc4; }
+  dialog h2 { margin-top: 0; font-family: Georgia, serif; }
+  dialog li { margin-bottom: 12px; line-height: 1.55; }
+  dialog ol { padding-left: 24px; }
+  dialog p { line-height: 1.55; }
+  dialog .button { width: 100%; }
+  [hidden] { display: none !important; }
+
+  @media (max-width: 430px) {
+    body { padding: 18px 8px; }
+    .board { padding: 10px 7px; border-width: 3px; border-radius: 20px; }
+    .pits { gap: 5px; }
+    .pit { min-height: 82px; }
+    .pit-count { font-size: 1.35rem; }
+    .store { padding: 10px 12px; }
+    .button { padding: 11px 13px; font-size: .9rem; }
+    .row-label { font-size: .73rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .pit.legal:hover { transform: none; }
+  }
+</style>
+</head>
+<body>
+<main class="app">
+  <header>
+    <div class="eyebrow">48 seeds · A little strategy every day</div>
+    <h1>Ayo Daily</h1>
+    <p class="subtitle">Your side. Your seeds. Your next clever move.</p>
+  </header>
+
+  <nav class="toolbar" aria-label="Game controls">
+    <button id="classicButton" class="button secondary" aria-pressed="true">
+      Classic game
+    </button>
+    <button id="dailyButton" class="button secondary" aria-pressed="false">
+      Daily Challenge
+    </button>
+    <button id="helpButton" class="button secondary">How to play</button>
+  </nav>
+
+  <div id="challenge" class="challenge"></div>
+
+  <section class="scores" aria-label="Captured seed stores">
+    <div id="humanStore" class="store">
+      <div><b>You</b><small>Your score store</small></div>
+      <strong id="humanScore">0</strong>
+    </div>
+    <div id="computerStore" class="store">
+      <div><b>Computer</b><small>Computer's score store</small></div>
+      <strong id="computerScore">0</strong>
+    </div>
+  </section>
+
+  <section class="board" aria-label="Ayo board">
+    <div class="row-label">
+      <span>COMPUTER</span><span>← Sowing direction</span>
+    </div>
+    <div id="computerPits" class="pits" role="group" aria-label="Computer pits"></div>
+    <div class="divider"></div>
+    <div id="humanPits" class="pits" role="group" aria-label="Your pits"></div>
+    <div class="row-label">
+      <span>YOU · Tap a gold-edged pit</span><span>Sow →</span>
+    </div>
+  </section>
+
+  <section class="status-panel">
+    <div role="status" aria-live="polite" aria-atomic="true">
+      <p id="status"></p>
+      <p id="detail"></p>
+    </div>
+    <div id="result" hidden>
+      <h2 id="resultTitle"></h2>
+      <p id="resultText"></p>
+      <button id="againButton" class="button">Play again</button>
+    </div>
+  </section>
+
+  <footer>Oware-style Ayo · No downloads, accounts or internet needed</footer>
+</main>
+
+<dialog id="rules" aria-labelledby="rulesTitle">
+  <h2 id="rulesTitle">How to play Ayo Daily</h2>
+  <p>
+    Ayo has regional variations. This game uses the
+    <b>Oware/Abapa-style, single-lap rules</b>, rather than
+    relay-sowing Ayoayo rules.
+  </p>
+  <ol>
+    <li>
+      <b>Your pits are on the bottom.</b> A classic game starts with
+      four seeds in each of the twelve pits. You move first.
+    </li>
+    <li>
+      <b>Sow counterclockwise.</b> Choose one of your nonempty pits.
+      All its seeds go one at a time into the following pits:
+      right along your row, then left along the computer's row.
+      Skip the starting pit whenever you pass it again.
+      Never sow into the score stores.
+    </li>
+    <li>
+      <b>Capture two or three.</b> If your last seed lands in an
+      opponent's pit and makes its total exactly two or three,
+      capture those seeds. Continue backwards through consecutive
+      opponent pits containing two or three. Stop at any other
+      count or at your own side.
+    </li>
+    <li>
+      <b>Leave your opponent something.</b> If that capture would
+      remove every seed on their side, the entire capture is
+      cancelled. The sowing still counts as your turn.
+    </li>
+    <li>
+      <b>Feed an empty side.</b> When the opponent has no seeds,
+      you must choose a move that gives them seeds, if possible.
+      Only legal moves have gold edges. If no legal move is
+      available, the game ends and each player collects the seeds
+      remaining on their own side.
+    </li>
+    <li>
+      <b>Win by collecting more seeds.</b> Capturing 25 wins
+      immediately. A score of 24 each is a draw. Turns alternate;
+      there are no bonus turns.
+    </li>
+  </ol>
+  <p>
+    <b>Loop safeguard:</b> this digital version also ends after the
+    same board, scores and turn occur three times, or after 100
+    consecutive turns without a capture. Each player then collects
+    the seeds on their own side.
+  </p>
+  <p>
+    <b>Daily Challenge:</b> a date-seeded sequence of legal moves
+    creates a shared starting position, including any captured
+    seeds. You play next. Everyone using this file gets the same
+    position for the same UTC date. Replaying keeps that day's
+    position; it is a daily match, not a guaranteed winning puzzle.
+  </p>
+  <button id="closeRules" class="button">Let's play</button>
+</dialog>
+
+<script>
+"use strict";
+
+/*
+  Pit order follows the sowing direction:
+  computer: 11 10  9  8  7  6
+  human:     0  1  2  3  4  5
+
+  Players: human = 0, computer = 1.
+  Score stores hold captured seeds only.
+*/
+
+const $ = id => document.getElementById(id);
+const HUMAN = 0;
+const COMPUTER = 1;
+
+let game;
+let mode = "classic";
+let challengeDate = "";
+let computerTimer = null;
+let generation = 0;
+let repetitions = new Map();
+let quietTurns = 0;
+let lastPit = -1;
+let lastMessage = "";
+let endReason = "";
+
+function initialState() {
+  return {
+    board: Array(12).fill(4),
+    scores: [0, 0],
+    turn: HUMAN,
+    over: false
+  };
+}
+
+function owns(pit, player) {
+  return player === HUMAN ? pit < 6 : pit >= 6;
+}
+
+function sideTotal(board, player) {
+  let total = 0;
+  for (let i = player * 6; i < player * 6 + 6; i++) {
+    total += board[i];
+  }
+  return total;
+}
+
+function sow(board, start) {
+  const next = board.slice();
+  let seeds = next[start];
+  let position = start;
+  next[start] = 0;
+
+  while (seeds > 0) {
+    position = (position + 1) % 12;
+    if (position === start) continue;
+    next[position]++;
+    seeds--;
+  }
+  return { board: next, last: position };
+}
+
+function legalMoves(state, player = state.turn) {
+  const moves = [];
+  const mustFeed = sideTotal(state.board, 1 - player) === 0;
+
+  for (let pit = player * 6; pit < player * 6 + 6; pit++) {
+    if (state.board[pit] === 0) continue;
+    if (mustFeed) {
+      const result = sow(state.board, pit);
+      if (sideTotal(result.board, 1 - player) === 0) continue;
+    }
+    moves.push(pit);
+  }
+  return moves;
+}
+
+/* Pure move function, also used by the computer and daily generator. */
+function applyMove(state, pit) {
+  const player = state.turn;
+  const result = sow(state.board, pit);
+  const board = result.board;
+  const scores = state.scores.slice();
+  const capturePits = [];
+  let position = result.last;
+
+  while (
+    owns(position, 1 - player) &&
+    (board[position] === 2 || board[position] === 3)
+  ) {
+    capturePits.push(position);
+    position = (position + 11) % 12;
+  }
+
+  const potential = capturePits.reduce((sum, p) => sum + board[p], 0);
+  const cancelled =
+    potential > 0 && potential === sideTotal(board, 1 - player);
+  const captured = cancelled ? 0 : potential;
+
+  if (captured > 0) {
+    for (const p of capturePits) board[p] = 0;
+    scores[player] += captured;
+  }
+
+  return {
+    board,
+    scores,
+    turn: 1 - player,
+    over: false,
+    captured,
+    cancelled,
+    last: result.last
+  };
+}
+
+function stateKey(state) {
+  return state.board.join(",") + "|" +
+    state.scores.join(",") + "|" + state.turn;
+}
+
+function collectRemaining(state) {
+  state.scores[HUMAN] += sideTotal(state.board, HUMAN);
+  state.scores[COMPUTER] += sideTotal(state.board, COMPUTER);
+  state.board.fill(0);
+}
+
+function checkEnd() {
+  if (game.scores.some(score => score >= 25)) {
+    endReason = "A player captured at least 25 seeds.";
+  } else if (game.scores[0] === 24 && game.scores[1] === 24) {
+    endReason = "All 48 seeds have been shared equally.";
+  } else if (legalMoves(game).length === 0) {
+    collectRemaining(game);
+    endReason = "No legal move remained. Seeds on each side were collected.";
+  } else if ((repetitions.get(stateKey(game)) || 0) >= 3) {
+    collectRemaining(game);
+    endReason = "The position repeated three times. Remaining seeds were collected.";
+  } else if (quietTurns >= 100) {
+    collectRemaining(game);
+    endReason = "100 turns passed without a capture. Remaining seeds were collected.";
+  } else {
+    return false;
+  }
+
+  game.over = true;
+  return true;
+}
+
+/* Stable integer hash and PRNG: no Math.random() in daily positions. */
+function hashText(text) {
+  let hash = 2166136261;
+  for (let i = 0; i < text.length; i++) {
+    hash ^= text.charCodeAt(i);
+    hash = Math.imul(hash, 16777619);
+  }
+  return hash >>> 0;
+}
+
+function seededRandom(seed) {
+  return function () {
+    seed = (seed + 0x6D2B79F5) >>> 0;
+    let value = seed;
+    value = Math.imul(value ^ (value >>> 15), value | 1);
+    value ^= value + Math.imul(value ^ (value >>> 7), value | 61);
+    return ((value ^ (value >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+function makeDaily(date) {
+  const random = seededRandom(hashText("ayo-daily-v1|" + date));
+  let state = initialState();
+  let candidate = initialState();
+
+  /*
+    Play an even number of legal opening turns.
+    Keep only nonterminal positions with the human to play.
+    Scores are preserved, so all 48 seeds remain accounted for.
+  */
+  for (let step = 0; step < 16; step++) {
+    const moves = legalMoves(state);
+    if (!moves.length) break;
+
+    state = applyMove(state, moves[Math.floor(random() * moves.length)]);
+    if (state.scores.some(score => score >= 25)) break;
+    if (!legalMoves(state).length) break;
+
+    if (state.turn === HUMAN) {
+      candidate = {
+        board: state.board.slice(),
+        scores: state.scores.slice(),
+        turn: HUMAN,
+        over: false
+      };
+    }
+  }
+  return candidate;
+}
+
+/* Small deterministic minimax search: look two turns ahead. */
+function evaluate(state) {
+  let human = state.scores[HUMAN];
+  let computer = state.scores[COMPUTER];
+
+  if (human >= 25) return -10000 - human;
+  if (computer >= 25) return 10000 + computer;
+
+  if (legalMoves(state).length === 0) {
+    human += sideTotal(state.board, HUMAN);
+    computer += sideTotal(state.board, COMPUTER);
+    if (computer === human) return 0;
+    return computer > human ? 10000 + computer : -10000 - human;
+  }
+
+  return 20 * (computer - human) +
+    legalMoves(state, COMPUTER).length -
+    legalMoves(state, HUMAN).length;
+}
+
+function minimax(state, depth) {
+  const moves = legalMoves(state);
+  if (
+    depth === 0 || moves.length === 0 ||
+    state.scores.some(score => score >= 25)
+  ) {
+    return evaluate(state);
+  }
+
+  const maximizing = state.turn === COMPUTER;
+  let best = maximizing ? -Infinity : Infinity;
+
+  for (const pit of moves) {
+    const value = minimax(applyMove(state, pit), depth - 1);
+    best = maximizing ? Math.max(best, value) : Math.min(best, value);
+  }
+  return best;
+}
+
+function chooseComputerMove() {
+  const moves = legalMoves(game);
+  let bestPit = moves[0];
+  let bestValue = -Infinity;
+
+  for (const pit of moves) {
+    const value = minimax(applyMove(game, pit), 1);
+    if (value > bestValue) {
+      bestValue = value;
+      bestPit = pit;
+    }
+  }
+  return bestPit;
+}
+
+function scheduleComputer() {
+  const currentGeneration = generation;
+  computerTimer = setTimeout(() => {
+    computerTimer = null;
+    if (
+      currentGeneration !== generation ||
+      game.over || game.turn !== COMPUTER
+    ) return;
+
+    const pit = chooseComputerMove();
+    if (pit !== undefined) playMove(pit);
+  }, 650);
+}
+
+function playMove(pit) {
+  if (game.over || !legalMoves(game).includes(pit)) return;
+
+  const player = game.turn;
+  const next = applyMove(game, pit);
+  const name = player === HUMAN ? "You" : "Computer";
+  const pitLabel = player === HUMAN ? pit + 1 : pit - 5;
+
+  lastMessage = name + " played pit " + pitLabel + ". ";
+  if (next.cancelled) {
+    lastMessage += "Capture cancelled: it would empty the opponent's side.";
+  } else if (next.captured > 0) {
+    lastMessage += next.captured + " seeds captured.";
+  } else {
+    lastMessage += "No capture.";
+  }
+
+  quietTurns = next.captured > 0 ? 0 : quietTurns + 1;
+  lastPit = next.last;
+  game = next;
+
+  const key = stateKey(game);
+  repetitions.set(key, (repetitions.get(key) || 0) + 1);
+  checkEnd();
+  render();
+
+  if (!game.over && game.turn === COMPUTER) scheduleComputer();
+}
+
+function makePit(pit, legal) {
+  const button = document.createElement("button");
+  const human = owns(pit, HUMAN);
+  const count = game.board[pit];
+  const label = human ? pit + 1 : pit - 5;
+  const playable = !game.over && game.turn === HUMAN &&
+    human && legal.includes(pit);
+
+  button.type = "button";
+  button.className = "pit" +
+    (playable ? " legal" : "") +
+    (lastPit === pit ? " last" : "");
+  button.disabled = !playable;
+  button.setAttribute(
+    "aria-label",
+    (human ? "Your" : "Computer") + " pit " + label +
+    ": " + count + " seeds" + (playable ? ". Tap to sow." : ".")
+  );
+
+  const countElement = document.createElement("span");
+  countElement.className = "pit-count";
+  countElement.textContent = count;
+
+  const seeds = document.createElement("span");
+  seeds.className = "seeds";
+  seeds.setAttribute("aria-hidden", "true");
+  for (let i = 0; i < Math.min(count, 12); i++) {
+    const seed = document.createElement("span");
+    seed.className = "seed";
+    seeds.appendChild(seed);
+  }
+
+  const number = document.createElement("span");
+  number.className = "pit-number";
+  number.textContent = label;
+  number.setAttribute("aria-hidden", "true");
+
+  button.append(countElement, seeds, number);
+  button.addEventListener("click", () => {
+    if (game.turn === HUMAN && !game.over) playMove(pit);
+  });
+  return button;
+}
+
+function render() {
+  const legal = legalMoves(game);
+  $("humanPits").replaceChildren();
+  $("computerPits").replaceChildren();
+
+  for (let pit = 11; pit >= 6; pit--) {
+    $("computerPits").appendChild(makePit(pit, legal));
+  }
+  for (let pit = 0; pit < 6; pit++) {
+    $("humanPits").appendChild(makePit(pit, legal));
+  }
+
+  $("humanScore").textContent = game.scores[HUMAN];
+  $("computerScore").textContent = game.scores[COMPUTER];
+  $("humanStore").classList.toggle("active", !game.over && game.turn === HUMAN);
+  $("computerStore").classList.toggle("active", !game.over && game.turn === COMPUTER);
+  $("result").hidden = !game.over;
+
+  if (game.over) {
+    const difference = game.scores[HUMAN] - game.scores[COMPUTER];
+    const title = difference > 0 ? "You win!" :
+      difference < 0 ? "Computer wins — try again!" : "It's a draw!";
+
+    $("status").textContent = title;
+    $("detail").textContent = endReason;
+    $("resultTitle").textContent = difference > 0 ? "Well played!" :
+      difference < 0 ? "Another round?" : "An even match.";
+    $("resultText").textContent =
+      "You: " + game.scores[HUMAN] +
+      " · Computer: " + game.scores[COMPUTER] +
+      (mode === "daily" ? " · Challenge " + challengeDate + " (UTC)" : "");
+    $("againButton").textContent =
+      mode === "daily" ? "Play again · same challenge" : "Play again";
+    return;
+  }
+
+  $("status").textContent = game.turn === HUMAN ?
+    "Your turn — choose a gold-edged pit" : "Computer is thinking…";
+
+  const feeding = game.turn === HUMAN &&
+    sideTotal(game.board, COMPUTER) === 0;
+  $("detail").textContent = feeding ?
+    lastMessage + " You must give the computer seeds." :
+    lastMessage || "Collect more seeds than the computer. Capture 25 to win.";
+}
+
+function startGame(nextMode, keepDailyDate = false) {
+  clearTimeout(computerTimer);
+  computerTimer = null;
+  generation++;
+  mode = nextMode;
+
+  if (mode === "daily" && (!keepDailyDate || !challengeDate)) {
+    challengeDate = new Date().toISOString().slice(0, 10);
+  }
+
+  game = mode === "daily" ? makeDaily(challengeDate) : initialState();
+  repetitions = new Map([[stateKey(game), 1]]);
+  quietTurns = 0;
+  lastPit = -1;
+  lastMessage = "";
+  endReason = "";
+
+  $("classicButton").setAttribute("aria-pressed", String(mode === "classic"));
+  $("dailyButton").setAttribute("aria-pressed", String(mode === "daily"));
+  $("challenge").textContent = mode === "daily" ?
+    "Daily Challenge · " + challengeDate +
+      " (UTC) · Same starting position worldwide. You move first." :
+    "Classic game · Four seeds per pit · You move first";
+
+  render();
+}
+
+$("classicButton").addEventListener("click", () => startGame("classic"));
+$("dailyButton").addEventListener("click", () => startGame("daily"));
+$("againButton").addEventListener("click", () => startGame(mode, true));
+
+$("helpButton").addEventListener("click", () => $("rules").showModal());
+$("closeRules").addEventListener("click", () => $("rules").close());
+$("rules").addEventListener("click", event => {
+  if (event.target !== $("rules")) return;
+  const rect = $("rules").getBoundingClientRect();
+  if (
+    event.clientX < rect.left || event.clientX > rect.right ||
+    event.clientY < rect.top || event.clientY > rect.bottom
+  ) {
+    $("rules").close();
+  }
+});
+
+startGame("classic");
+</script>
+</body>
+</html>
