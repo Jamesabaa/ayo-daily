@@ -2,17 +2,71 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#63351f">
-<title>Ayo Daily</title>
+<title>Ayo Daily — African Mancala Strategy Game</title>
+<meta name="description" content="Play Ayo (Oware/Mancala) online daily. Classic and date-seeded Daily Challenges, smart AI, sound effects, stats, and zero downloads.">
+<link rel="canonical" href="https://jamesabaa.github.io/ayo-daily/">
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://jamesabaa.github.io/ayo-daily/">
+<meta property="og:title" content="Ayo Daily — African Mancala Strategy Game">
+<meta property="og:description" content="Play Ayo (Oware/Mancala) online daily. Play the same date-seeded puzzle as players worldwide, track your streak, and sharpen your strategy.">
+<meta property="og:image" content="https://jamesabaa.github.io/ayo-daily/icon-512.svg">
+
+<!-- Twitter -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:url" content="https://jamesabaa.github.io/ayo-daily/">
+<meta name="twitter:title" content="Ayo Daily — African Mancala Strategy Game">
+<meta name="twitter:description" content="One board. 48 seeds. A new challenge every day. Play Ayo online against clever AI.">
+<meta name="twitter:image" content="https://jamesabaa.github.io/ayo-daily/icon-512.svg">
+
+<!-- Favicon & PWA -->
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link rel="apple-touch-icon" href="icon-512.svg">
+<link rel="manifest" href="manifest.webmanifest">
+
+<!-- Schema.org JSON-LD -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "VideoGame",
+  "name": "Ayo Daily",
+  "url": "https://jamesabaa.github.io/ayo-daily/",
+  "description": "A web-based African Mancala (Ayo/Oware) strategy game with daily challenges and AI opponents.",
+  "genre": ["Strategy", "Board Game", "Puzzle"],
+  "playMode": "SinglePlayer",
+  "applicationCategory": "Game",
+  "operatingSystem": "Any",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  }
+}
+</script>
+
+<!-- Google AdSense tag (Replace ca-pub-XXXXXXXXXXXXXXXX with your actual AdSense ID) -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
 <style>
   :root {
     color-scheme: light;
     --cream: #fff5dc;
     --ink: #382317;
     --green: #215c45;
+    --green-dark: #153c2d;
     --gold: #f4bc54;
     --wood: #79452b;
+    --wood-dark: #502714;
+    --wood-light: #9a5a3a;
+    --accent: #d97736;
+    --border-warm: #d9b984;
+    --surface: #fff8e9;
+    --radius-lg: 20px;
+    --radius-sm: 10px;
+    --shadow-soft: 0 10px 25px rgba(99, 53, 31, 0.15);
   }
 
   * { box-sizing: border-box; }
@@ -22,52 +76,94 @@
     min-height: 100vh;
     min-height: 100dvh;
     background:
-      radial-gradient(ellipse at top, #fff4d7, transparent 65%),
+      radial-gradient(ellipse at top, #fff4d7 0%, transparent 65%),
       #eed6ac;
     color: var(--ink);
-    font-family: system-ui, -apple-system, "Segoe UI", sans-serif;
-    padding: 24px 12px;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    padding: 16px 12px 48px;
+    line-height: 1.5;
   }
 
   button { font: inherit; touch-action: manipulation; }
-  button:focus-visible, a:focus-visible {
-    outline: 4px solid #087c99;
-    outline-offset: 4px;
+  button:focus-visible, a:focus-visible, select:focus-visible {
+    outline: 3px solid #087c99;
+    outline-offset: 3px;
   }
 
-  .app { width: min(100%, 780px); margin: auto; }
-  header { text-align: center; }
+  .app { width: min(100%, 820px); margin: 0 auto; }
+
+  header { text-align: center; margin-bottom: 12px; position: relative; }
   .eyebrow {
     color: var(--green);
-    font-size: .76rem;
+    font-size: .8rem;
     font-weight: 800;
-    letter-spacing: .19em;
+    letter-spacing: .18em;
     text-transform: uppercase;
   }
   h1 {
-    margin: 4px 0;
+    margin: 4px 0 2px;
     font-family: Georgia, serif;
-    font-size: clamp(2.7rem, 9vw, 4rem);
+    font-size: clamp(2.3rem, 7vw, 3.6rem);
+    letter-spacing: -0.02em;
+    color: var(--wood-dark);
   }
-  .subtitle { margin: 0 0 22px; line-height: 1.5; }
+  .subtitle { margin: 0 0 16px; font-size: 0.95rem; color: #62432e; }
 
+  /* Ad containers */
+  .ad-slot-wrapper {
+    margin: 12px auto 16px;
+    text-align: center;
+    max-width: 728px;
+    min-height: 50px;
+  }
+  .ad-badge {
+    font-size: 0.65rem;
+    letter-spacing: 0.12em;
+    color: #8c6f5a;
+    text-transform: uppercase;
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .ad-placeholder {
+    background: rgba(255, 248, 233, 0.65);
+    border: 1px dashed var(--border-warm);
+    border-radius: var(--radius-sm);
+    padding: 8px;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.78rem;
+    color: #8c6f5a;
+  }
+
+  /* Toolbar */
   .toolbar {
     display: flex;
     justify-content: center;
-    gap: 10px;
+    align-items: center;
+    gap: 8px;
     flex-wrap: wrap;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .button {
-    min-height: 48px;
-    padding: 12px 18px;
+    min-height: 42px;
+    padding: 9px 15px;
     border: 2px solid transparent;
-    border-radius: 14px;
+    border-radius: 12px;
     background: var(--green);
     color: white;
     cursor: pointer;
-    font-weight: 750;
+    font-weight: 700;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    transition: filter 0.15s, transform 0.15s;
   }
+  .button:hover { filter: brightness(1.08); }
+  .button:active { transform: translateY(1px); }
   .button.secondary {
     background: var(--cream);
     color: var(--ink);
@@ -75,48 +171,82 @@
   }
   .button[aria-pressed="true"] {
     background: var(--green);
-    border-color: var(--green);
+    border-color: var(--green-dark);
     color: white;
-    box-shadow: 0 3px 0 #133d2c;
+    box-shadow: 0 2px 0 var(--green-dark);
   }
-  .button:hover { filter: brightness(1.08); }
-
-  .challenge {
-    text-align: center;
+  .button.icon-only {
+    padding: 8px 12px;
+    font-size: 1.1rem;
+    min-width: 42px;
+  }
+  .select-wrapper {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+  }
+  .select-input {
     min-height: 42px;
-    font-size: .88rem;
-    line-height: 1.5;
-    margin-bottom: 12px;
+    padding: 8px 12px;
+    border: 2px solid #b88650;
+    border-radius: 12px;
+    background: var(--cream);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.88rem;
+    cursor: pointer;
   }
 
+  .challenge-banner {
+    text-align: center;
+    min-height: 38px;
+    font-size: 0.9rem;
+    line-height: 1.4;
+    margin-bottom: 12px;
+    padding: 6px 14px;
+    background: rgba(255, 248, 233, 0.7);
+    border-radius: 30px;
+    display: inline-block;
+    border: 1px solid var(--border-warm);
+  }
+  .challenge-container { text-align: center; }
+
+  /* Scores */
   .scores {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 12px;
-    margin-bottom: 16px;
+    margin-bottom: 14px;
   }
   .store {
-    background: #fff8e9;
-    border: 2px solid #d9b984;
-    border-radius: 20px;
-    padding: 12px 16px;
+    background: var(--surface);
+    border: 2px solid var(--border-warm);
+    border-radius: var(--radius-lg);
+    padding: 12px 18px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 8px;
+    gap: 10px;
+    transition: border-color 0.2s, box-shadow 0.2s;
   }
-  .store.active { border-color: var(--green); }
-  .store small { display: block; color: #745743; }
-  .store strong { font-size: 2.2rem; color: var(--green); }
+  .store.active {
+    border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(33, 92, 69, 0.2);
+  }
+  .store small { display: block; color: #745743; font-size: 0.78rem; }
+  .store b { font-size: 1.05rem; }
+  .store strong { font-size: 2.3rem; color: var(--green); line-height: 1; }
 
+  /* Board */
   .board {
     background: var(--wood);
-    border: 5px solid #5d321e;
-    border-radius: 28px;
+    border: 5px solid var(--wood-dark);
+    border-radius: 26px;
     padding: 16px;
-    box-shadow: 0 12px 0 #452617, 0 20px 30px #63351f25;
+    box-shadow: 0 10px 0 #3e1e0f, 0 18px 28px rgba(99, 53, 31, 0.25);
     color: var(--cream);
     position: relative;
+    user-select: none;
   }
   .board::before {
     content: "";
@@ -134,8 +264,9 @@
     justify-content: space-between;
     gap: 8px;
     font-size: .8rem;
-    margin: 9px 3px;
-    letter-spacing: .025em;
+    margin: 8px 4px;
+    letter-spacing: .03em;
+    font-weight: 600;
   }
   .pits {
     display: grid;
@@ -144,8 +275,8 @@
   }
   .divider {
     height: 2px;
-    background: #aa7450;
-    margin: 17px 0;
+    background: #a46d47;
+    margin: 14px 0;
   }
   .pit {
     position: relative;
@@ -154,34 +285,49 @@
     align-items: center;
     justify-content: center;
     min-width: 0;
-    min-height: 88px;
-    padding: 5px 2px;
-    border-radius: 45%;
+    min-height: 90px;
+    padding: 6px 2px;
+    border-radius: 46%;
     border: 2px solid #b87c4d;
     background: #47291d;
     color: var(--cream);
-    box-shadow: inset 0 5px 9px #23130d80;
-    opacity: 1;
+    box-shadow: inset 0 5px 9px rgba(35, 19, 13, 0.7);
+    transition: transform 0.12s, border-color 0.15s, background-color 0.15s;
   }
   .pit.legal {
     border-color: var(--gold);
-    background: #53341e;
+    background: #55341c;
     cursor: pointer;
   }
   .pit.legal:hover {
-    background: #6a4725;
+    background: #6c4424;
     transform: translateY(-2px);
   }
+  .pit.sowing-active {
+    outline: 4px solid #fff5dc;
+    background: #7a4f29;
+    transform: scale(1.06);
+  }
+  .pit.capture-flash {
+    outline: 4px solid var(--gold);
+    background: #215c45 !important;
+    animation: flashCapture 0.5s ease-in-out;
+  }
+  @keyframes flashCapture {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.12); }
+    100% { transform: scale(1); }
+  }
   .pit.last { outline: 3px solid #f1d49d; outline-offset: 2px; }
-  .pit-count { font-weight: 850; font-size: 1.55rem; line-height: 1.2; }
+  .pit-count { font-weight: 850; font-size: 1.55rem; line-height: 1.1; }
   .seeds {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
     gap: 3px;
-    max-width: 40px;
+    max-width: 42px;
     min-height: 18px;
-    margin-top: 5px;
+    margin-top: 4px;
   }
   .seed {
     width: 6px;
@@ -194,84 +340,246 @@
   .pit-number {
     font-size: .65rem;
     color: #dfbd94;
-    margin-top: 4px;
+    margin-top: 3px;
   }
 
+  /* Status Panel */
   .status-panel {
     text-align: center;
-    margin-top: 30px;
-    padding: 18px;
-    background: #fff8e9;
-    border-radius: 20px;
-    border: 1px solid #d9b984;
+    margin-top: 24px;
+    padding: 20px;
+    background: var(--surface);
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border-warm);
+    box-shadow: var(--shadow-soft);
   }
-  #status { margin: 0; font-size: 1.13rem; font-weight: 800; }
-  #detail { margin: 8px 0 0; line-height: 1.5; font-size: .9rem; }
-  #result { margin-top: 16px; }
-  #result h2 { margin: 0 0 8px; font-family: Georgia, serif; }
-  #result p { line-height: 1.5; }
-  footer { text-align: center; margin-top: 20px; font-size: .8rem; color: #73533e; }
+  #status { margin: 0; font-size: 1.15rem; font-weight: 800; color: var(--wood-dark); }
+  #detail { margin: 8px 0 0; line-height: 1.5; font-size: .92rem; color: #5a3d2c; }
+  
+  /* Result Section */
+  #result { margin-top: 20px; border-top: 1px dashed var(--border-warm); padding-top: 16px; }
+  #result h2 { margin: 0 0 6px; font-family: Georgia, serif; font-size: 1.8rem; color: var(--green); }
+  #result p { margin: 6px 0 16px; font-size: 1rem; }
+  .result-actions {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+  }
 
+  /* Countdown */
+  .next-countdown {
+    font-size: 0.85rem;
+    color: #745743;
+    margin-top: 12px;
+  }
+
+  /* Toast Notification */
+  .toast {
+    position: fixed;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(100px);
+    background: #215c45;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 30px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+    font-weight: 700;
+    font-size: 0.95rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.3s cubic-bezier(0.18, 0.89, 0.32, 1.28), opacity 0.3s ease;
+    z-index: 1000;
+  }
+  .toast.show {
+    transform: translateX(-50%) translateY(0);
+    opacity: 1;
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 32px;
+    font-size: .84rem;
+    color: #73533e;
+  }
+  .footer-links {
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .footer-links button, .footer-links a {
+    background: none;
+    border: none;
+    color: var(--green);
+    text-decoration: underline;
+    cursor: pointer;
+    font-size: 0.82rem;
+    padding: 2px 4px;
+  }
+  .footer-links button:hover, .footer-links a:hover {
+    color: var(--accent);
+  }
+
+  /* Modals */
   dialog {
-    width: min(92vw, 600px);
+    width: min(92vw, 620px);
     max-height: 85vh;
-    padding: 24px;
+    padding: 24px 28px;
     border: 2px solid #b88650;
     border-radius: 22px;
     background: #fff8e9;
     color: var(--ink);
-    box-shadow: 0 20px 70px #0005;
+    box-shadow: 0 20px 70px rgba(0,0,0,0.35);
+    overflow-y: auto;
   }
-  dialog::backdrop { background: #25170cc4; }
-  dialog h2 { margin-top: 0; font-family: Georgia, serif; }
-  dialog li { margin-bottom: 12px; line-height: 1.55; }
-  dialog ol { padding-left: 24px; }
-  dialog p { line-height: 1.55; }
-  dialog .button { width: 100%; }
+  dialog::backdrop { background: rgba(37, 23, 12, 0.75); }
+  dialog h2 { margin-top: 0; font-family: Georgia, serif; color: var(--wood-dark); font-size: 1.6rem; }
+  dialog h3 { margin: 18px 0 6px; font-size: 1.1rem; color: var(--green); }
+  dialog li { margin-bottom: 10px; line-height: 1.55; font-size: 0.92rem; }
+  dialog ol, dialog ul { padding-left: 20px; }
+  dialog p { line-height: 1.6; font-size: 0.92rem; margin: 8px 0 14px; }
+  dialog .close-modal-btn {
+    width: 100%;
+    margin-top: 18px;
+  }
+
+  /* Stats grid */
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 10px;
+    margin: 18px 0;
+  }
+  .stat-card {
+    background: #fff4d7;
+    border: 1px solid var(--border-warm);
+    border-radius: 12px;
+    padding: 12px 6px;
+    text-align: center;
+  }
+  .stat-value {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: var(--green);
+    line-height: 1.1;
+  }
+  .stat-label {
+    font-size: 0.72rem;
+    color: #745743;
+    text-transform: uppercase;
+    font-weight: 700;
+    margin-top: 4px;
+  }
+
+  /* Cookie Banner */
+  .cookie-consent {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #2c1a11;
+    color: #fff5dc;
+    padding: 14px 20px;
+    font-size: 0.85rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    box-shadow: 0 -4px 16px rgba(0,0,0,0.25);
+    z-index: 999;
+    flex-wrap: wrap;
+  }
+  .cookie-consent p { margin: 0; max-width: 650px; line-height: 1.4; }
+  .cookie-consent .button { font-size: 0.82rem; min-height: 36px; padding: 6px 14px; }
+
   [hidden] { display: none !important; }
 
-  @media (max-width: 430px) {
-    body { padding: 18px 8px; }
-    .board { padding: 10px 7px; border-width: 3px; border-radius: 20px; }
-    .pits { gap: 5px; }
-    .pit { min-height: 82px; }
-    .pit-count { font-size: 1.35rem; }
-    .store { padding: 10px 12px; }
-    .button { padding: 11px 13px; font-size: .9rem; }
-    .row-label { font-size: .73rem; }
+  @media (max-width: 480px) {
+    body { padding: 12px 6px 40px; }
+    .board { padding: 8px 6px; border-width: 3px; border-radius: 18px; }
+    .pits { gap: 4px; }
+    .pit { min-height: 80px; }
+    .pit-count { font-size: 1.3rem; }
+    .seed { width: 5px; height: 6px; }
+    .store { padding: 8px 12px; }
+    .store strong { font-size: 1.9rem; }
+    .button { padding: 8px 12px; font-size: 0.85rem; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); }
   }
+
   @media (prefers-reduced-motion: reduce) {
     .pit.legal:hover { transform: none; }
+    .toast { transition: none; }
   }
 </style>
 </head>
 <body>
+
 <main class="app">
   <header>
-    <div class="eyebrow">48 seeds · A little strategy every day</div>
+    <div class="eyebrow">48 seeds · African Mancala · A little strategy every day</div>
     <h1>Ayo Daily</h1>
     <p class="subtitle">Your side. Your seeds. Your next clever move.</p>
   </header>
 
+  <!-- Top Ad Slot (Google AdSense) -->
+  <div class="ad-slot-wrapper">
+    <div class="ad-badge">Advertisement</div>
+    <div class="ad-placeholder" id="ad-top">
+      <!-- In production with an approved AdSense account, insert ad unit snippet here -->
+      <ins class="adsbygoogle"
+           style="display:inline-block;width:728px;max-width:100%;height:90px"
+           data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+           data-ad-slot="1234567890"></ins>
+      <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </div>
+  </div>
+
   <nav class="toolbar" aria-label="Game controls">
-    <button id="classicButton" class="button secondary" aria-pressed="true">
-      Classic game
+    <button id="classicButton" class="button secondary" aria-pressed="true" title="Standard Oware match with 4 seeds per pit">
+      Classic Game
     </button>
-    <button id="dailyButton" class="button secondary" aria-pressed="false">
+    <button id="dailyButton" class="button secondary" aria-pressed="false" title="Today's synchronized global puzzle">
       Daily Challenge
     </button>
-    <button id="helpButton" class="button secondary">How to play</button>
+    <div class="select-wrapper">
+      <label for="aiDifficulty" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">AI Level</label>
+      <select id="aiDifficulty" class="select-input" title="Choose AI difficulty">
+        <option value="1">AI: Casual</option>
+        <option value="2" selected>AI: Clever</option>
+        <option value="3">AI: Master</option>
+      </select>
+    </div>
+    <button id="soundButton" class="button secondary icon-only" title="Toggle sound effects" aria-label="Toggle sound">
+      <span id="soundIcon">🔊</span>
+    </button>
+    <button id="statsButton" class="button secondary icon-only" title="View your streaks and game statistics" aria-label="Game stats">
+      📊
+    </button>
+    <button id="undoButton" class="button secondary icon-only" title="Undo your last move (Classic mode only)" aria-label="Undo move">
+      ↩️
+    </button>
+    <button id="helpButton" class="button secondary" title="Learn rules and tips">
+      Rules
+    </button>
   </nav>
 
-  <div id="challenge" class="challenge"></div>
+  <div class="challenge-container">
+    <div id="challenge" class="challenge-banner"></div>
+  </div>
 
   <section class="scores" aria-label="Captured seed stores">
-    <div id="humanStore" class="store">
-      <div><b>You</b><small>Your score store</small></div>
+    <div id="humanStore" class="store" aria-live="polite">
+      <div><b>You</b><small>Your captured seeds</small></div>
       <strong id="humanScore">0</strong>
     </div>
-    <div id="computerStore" class="store">
-      <div><b>Computer</b><small>Computer's score store</small></div>
+    <div id="computerStore" class="store" aria-live="polite">
+      <div><b>Computer</b><small>Computer's captured seeds</small></div>
       <strong id="computerScore">0</strong>
     </div>
   </section>
@@ -293,94 +601,198 @@
       <p id="status"></p>
       <p id="detail"></p>
     </div>
+
+    <!-- Results Section -->
     <div id="result" hidden>
       <h2 id="resultTitle"></h2>
       <p id="resultText"></p>
-      <button id="againButton" class="button">Play again</button>
+      
+      <div class="result-actions">
+        <button id="shareButton" class="button" style="background:#d97736">
+          📤 Share Result
+        </button>
+        <button id="againButton" class="button">
+          Play Again
+        </button>
+      </div>
+
+      <div id="countdownWrapper" class="next-countdown" hidden>
+        Next Daily Challenge in: <b id="countdownTimer">--:--:--</b>
+      </div>
+
+      <!-- Result Ad Slot -->
+      <div class="ad-slot-wrapper" style="margin-top:16px;">
+        <div class="ad-badge">Sponsored</div>
+        <div class="ad-placeholder" id="ad-result">
+          <ins class="adsbygoogle"
+               style="display:inline-block;width:300px;height:250px"
+               data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+               data-ad-slot="9876543210"></ins>
+          <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+        </div>
+      </div>
     </div>
   </section>
 
-  <footer>Oware-style Ayo · No downloads, accounts or internet needed</footer>
+  <footer>
+    <div>Authentic Oware / Ayo Rules · Single-lap sowing · 100% Free &amp; Client-side</div>
+    <div class="footer-links">
+      <button type="button" id="openAbout">About Ayo History</button>
+      <button type="button" id="openPrivacy">Privacy Policy</button>
+      <button type="button" id="openTerms">Terms of Use</button>
+      <a href="https://github.com/Jamesabaa/ayo-daily" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </footer>
 </main>
 
-<dialog id="rules" aria-labelledby="rulesTitle">
-  <h2 id="rulesTitle">How to play Ayo Daily</h2>
+<!-- Toast notification for copy / alerts -->
+<div id="toast" class="toast" role="alert" aria-live="assertive"></div>
+
+<!-- Cookie Consent Banner for AdSense / GDPR -->
+<div id="cookieBanner" class="cookie-consent" hidden>
   <p>
-    Ayo has regional variations. This game uses the
-    <b>Oware/Abapa-style, single-lap rules</b>, rather than
-    relay-sowing Ayoayo rules.
+    We use cookies and similar technologies to remember your game preferences, save streaks, and serve personalized or non-personalized advertisements via Google AdSense.
+  </p>
+  <div style="display:flex;gap:8px;">
+    <button id="acceptCookies" class="button">Accept All</button>
+    <button id="declineCookies" class="button secondary">Essential Only</button>
+  </div>
+</div>
+
+<!-- Modal: How to Play -->
+<dialog id="rulesModal" aria-labelledby="rulesTitle">
+  <h2 id="rulesTitle">How to Play Ayo (Oware Rules)</h2>
+  <p>
+    Ayo (also known as <i>Ayoayo</i> in Nigeria, <i>Oware</i> in Ghana, and part of the worldwide <b>Mancala</b> family) is one of the oldest and purest mathematical strategy games on Earth. This edition uses official single-lap <b>Abapa tournament rules</b>.
   </p>
   <ol>
     <li>
-      <b>Your pits are on the bottom.</b> A classic game starts with
-      four seeds in each of the twelve pits. You move first.
+      <b>Your Pits:</b> You control the 6 bottom pits (1 to 6). The computer controls the 6 top pits. A classic game begins with <b>4 seeds in each pit (48 total)</b>.
     </li>
     <li>
-      <b>Sow counterclockwise.</b> Choose one of your nonempty pits.
-      All its seeds go one at a time into the following pits:
-      right along your row, then left along the computer's row.
-      Skip the starting pit whenever you pass it again.
-      Never sow into the score stores.
+      <b>Sowing:</b> Pick any non-empty pit on your side. Lift all its seeds and distribute them one by one <b>counter-clockwise</b> (right along your side, left along the computer's side). If a pit has 12 or more seeds, skip the starting pit.
     </li>
     <li>
-      <b>Capture two or three.</b> If your last seed lands in an
-      opponent's pit and makes its total exactly two or three,
-      capture those seeds. Continue backwards through consecutive
-      opponent pits containing two or three. Stop at any other
-      count or at your own side.
+      <b>Capturing:</b> If your last seed lands in an opponent's pit and makes its count <b>exactly 2 or 3</b>, you capture those seeds! If the preceding pits on the opponent's side also contain 2 or 3 seeds, you capture those too (in sequence).
     </li>
     <li>
-      <b>Leave your opponent something.</b> If that capture would
-      remove every seed on their side, the entire capture is
-      cancelled. The sowing still counts as your turn.
+      <b>Grand Slam Rule (No Starvation):</b> If a capture would strip every single seed from your opponent's side, the capture is cancelled. You cannot starve your opponent.
     </li>
     <li>
-      <b>Feed an empty side.</b> When the opponent has no seeds,
-      you must choose a move that gives them seeds, if possible.
-      Only legal moves have gold edges. If no legal move is
-      available, the game ends and each player collects the seeds
-      remaining on their own side.
+      <b>Feeding:</b> If your opponent has 0 seeds on their side, you <i>must</i> choose a move that sows seeds to their side if available. Legal moves are highlighted with gold borders.
     </li>
     <li>
-      <b>Win by collecting more seeds.</b> Capturing 25 wins
-      immediately. A score of 24 each is a draw. Turns alternate;
-      there are no bonus turns.
+      <b>Winning:</b> First player to capture <b>25 seeds</b> wins immediately! 24–24 is a draw.
     </li>
   </ol>
-  <p>
-    <b>Loop safeguard:</b> this digital version also ends after the
-    same board, scores and turn occur three times, or after 100
-    consecutive turns without a capture. Each player then collects
-    the seeds on their own side.
+  <button id="closeRules" class="button close-modal-btn">Got It — Let's Play</button>
+</dialog>
+
+<!-- Modal: Player Stats -->
+<dialog id="statsModal" aria-labelledby="statsTitle">
+  <h2 id="statsTitle">Your Game Statistics</h2>
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div id="statPlayed" class="stat-value">0</div>
+      <div class="stat-label">Played</div>
+    </div>
+    <div id="statWinRateCard" class="stat-card">
+      <div id="statWinRate" class="stat-value">0%</div>
+      <div class="stat-label">Win Rate</div>
+    </div>
+    <div class="stat-card">
+      <div id="statStreak" class="stat-value">0</div>
+      <div class="stat-label">Current Streak</div>
+    </div>
+    <div class="stat-card">
+      <div id="statMaxStreak" class="stat-value">0</div>
+      <div class="stat-label">Max Streak</div>
+    </div>
+  </div>
+  <p id="statCapturedLine" style="text-align:center;font-weight:600;color:var(--wood-dark);">
+    Total seeds captured: <span id="statSeeds">0</span> 🌰
   </p>
+  <button id="closeStats" class="button close-modal-btn">Close</button>
+</dialog>
+
+<!-- Modal: About Ayo & Cultural Heritage (AdSense Editorial Content) -->
+<dialog id="aboutModal" aria-labelledby="aboutTitle">
+  <h2 id="aboutTitle">The Heritage &amp; Mathematics of Ayo</h2>
   <p>
-    <b>Daily Challenge:</b> a date-seeded sequence of legal moves
-    creates a shared starting position, including any captured
-    seeds. You play next. Everyone using this file gets the same
-    position for the same UTC date. Replaying keeps that day's
-    position; it is a daily match, not a guaranteed winning puzzle.
+    Ayo Olopon is a classical African board game originated by the Yoruba people of Southwestern Nigeria, deeply interconnected with the Pan-African Mancala family (known as <i>Oware</i> in the Akan culture of Ghana, <i>Awale</i> in Côte d’Ivoire, <i>Omweso</i> in Uganda, and <i>Bao</i> in Swahili East Africa).
   </p>
-  <button id="closeRules" class="button">Let's play</button>
+  <h3>Cultural Significance</h3>
+  <p>
+    Historically carved from single solid blocks of rich hardwood (such as Iroko or Mahogany), the Ayo board was traditionally kept on verandas and community courtyards. The smooth seeds used are traditionally <i>Caesalpinia bonduc</i> (known locally as <i>ashey</i> or nickernuts)—durable, marble-like seeds that produce a resonant, musical click against carved timber.
+  </p>
+  <h3>Mathematical Depth &amp; AI</h3>
+  <p>
+    Unlike chess or checkers, Ayo contains no hidden information and zero chance. It is a game of perfect knowledge, combinatorial math, and forward calculation. Grandmasters anticipate long sowing cycles, creating "kru" (accumulations of 12+ seeds) to trigger massive chain captures. In 2002, computer scientists solved Oware, proving that with flawless play from both sides, the game ends in a draw.
+  </p>
+  <button id="closeAbout" class="button close-modal-btn">Close</button>
+</dialog>
+
+<!-- Modal: Privacy Policy (AdSense Compliant) -->
+<dialog id="privacyModal" aria-labelledby="privacyTitle">
+  <h2 id="privacyTitle">Privacy Policy</h2>
+  <p>Last updated: October 2026</p>
+  <p>
+    Your privacy is important to us. Ayo Daily (accessible at <code>https://jamesabaa.github.io/ayo-daily/</code>) is designed with privacy-first architecture.
+  </p>
+  <h3>1. Local Storage</h3>
+  <p>
+    Ayo Daily does not require an account, login, or personal identifiers. Your game statistics, win streaks, sound preferences, and cookie selections are stored strictly on your own device using browser <code>localStorage</code>.
+  </p>
+  <h3>2. Google AdSense &amp; Cookies</h3>
+  <p>
+    This website uses Google AdSense to serve advertisements. Google and its third-party advertising partners use cookies to serve ads based on your prior visits to this website or other websites on the Internet:
+  </p>
+  <ul>
+    <li>Google's use of advertising cookies enables it and its partners to serve ads based on your visit to our site and/or other sites on the Internet.</li>
+    <li>Users may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener">Google Ads Settings</a> or <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener">www.aboutads.info</a>.</li>
+  </ul>
+  <h3>3. Analytics</h3>
+  <p>
+    We may collect anonymous aggregate performance telemetry (such as page load times and error rates) to improve game performance. No personally identifiable information (PII) is sold or shared.
+  </p>
+  <button id="closePrivacy" class="button close-modal-btn">Close</button>
+</dialog>
+
+<!-- Modal: Terms of Use -->
+<dialog id="termsModal" aria-labelledby="termsTitle">
+  <h2 id="termsTitle">Terms of Use</h2>
+  <p>
+    Welcome to Ayo Daily! By accessing or playing Ayo Daily, you agree to these Terms of Use:
+  </p>
+  <ul>
+    <li><b>Free Access:</b> The game is provided free of charge for casual entertainment and cultural education.</li>
+    <li><b>Fair Play:</b> Daily challenge seeds are synchronized by date (UTC). Users are encouraged to solve each daily puzzle fairly.</li>
+    <li><b>Disclaimer:</b> The game is provided "as is" without warranties of any kind. We are not liable for any issues arising from your use of this site.</li>
+  </ul>
+  <button id="closeTerms" class="button close-modal-btn">Close</button>
 </dialog>
 
 <script>
 "use strict";
 
-/*
-  Pit order follows the sowing direction:
-  computer: 11 10  9  8  7  6
-  human:     0  1  2  3  4  5
-
-  Players: human = 0, computer = 1.
-  Score stores hold captured seeds only.
-*/
+/* ==========================================================================
+   CONFIG & STATE
+   ========================================================================== */
+const AYO_CONFIG = {
+  // Put your AdSense publisher ID here (e.g. "ca-pub-1234567890123456")
+  adsenseClient: "ca-pub-XXXXXXXXXXXXXXXX",
+  sowStepDelay: 90, // ms per seed during animated sowing
+  storageKeyStats: "ayo_daily_stats_v2",
+  storageKeySettings: "ayo_daily_settings_v2"
+};
 
 const $ = id => document.getElementById(id);
 const HUMAN = 0;
 const COMPUTER = 1;
 
 let game;
-let mode = "classic";
+let historyStack = [];
+let mode = "classic"; // "classic" | "daily"
 let challengeDate = "";
 let computerTimer = null;
 let generation = 0;
@@ -389,13 +801,207 @@ let quietTurns = 0;
 let lastPit = -1;
 let lastMessage = "";
 let endReason = "";
+let isSowingAnimation = false;
 
+// Settings & Audio
+let settings = {
+  soundEnabled: true,
+  aiDepth: 2
+};
+
+// Player statistics
+let stats = {
+  played: 0,
+  wins: 0,
+  losses: 0,
+  draws: 0,
+  currentStreak: 0,
+  maxStreak: 0,
+  totalSeedsCaptured: 0,
+  dailyCompletedDates: {}
+};
+
+/* ==========================================================================
+   PERSISTENCE (LOCAL STORAGE)
+   ========================================================================== */
+function loadPersistedData() {
+  try {
+    const savedSettings = localStorage.getItem(AYO_CONFIG.storageKeySettings);
+    if (savedSettings) settings = { ...settings, ...JSON.parse(savedSettings) };
+
+    const savedStats = localStorage.getItem(AYO_CONFIG.storageKeyStats);
+    if (savedStats) stats = { ...stats, ...JSON.parse(savedStats) };
+  } catch (e) {
+    console.warn("Storage access restricted:", e);
+  }
+
+  // Update UI with loaded settings
+  updateSoundButton();
+  $("aiDifficulty").value = String(settings.aiDepth || 2);
+  updateStatsUI();
+
+  // Check Cookie Consent
+  if (!localStorage.getItem("ayo_cookie_consent")) {
+    $("cookieBanner").hidden = false;
+  }
+}
+
+function saveStats() {
+  try {
+    localStorage.setItem(AYO_CONFIG.storageKeyStats, JSON.stringify(stats));
+  } catch (e) {}
+  updateStatsUI();
+}
+
+function saveSettings() {
+  try {
+    localStorage.setItem(AYO_CONFIG.storageKeySettings, JSON.stringify(settings));
+  } catch (e) {}
+}
+
+function updateStatsUI() {
+  $("statPlayed").textContent = stats.played;
+  const rate = stats.played > 0 ? Math.round((stats.wins / stats.played) * 100) : 0;
+  $("statWinRate").textContent = rate + "%";
+  $("statStreak").textContent = stats.currentStreak;
+  $("statMaxStreak").textContent = stats.maxStreak;
+  $("statSeeds").textContent = stats.totalSeedsCaptured;
+}
+
+/* ==========================================================================
+   WEB AUDIO SYNTHESIS (Zero External Assets)
+   ========================================================================== */
+let audioCtx = null;
+
+function getAudioContext() {
+  if (!audioCtx) {
+    const AudioContext = window.AudioContext || window.webkitAudioContext;
+    if (AudioContext) audioCtx = new AudioContext();
+  }
+  if (audioCtx && audioCtx.state === "suspended") {
+    audioCtx.resume();
+  }
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (!settings.soundEnabled) return;
+  const ctx = getAudioContext();
+  if (!ctx) return;
+
+  const now = ctx.currentTime;
+
+  if (type === "seed") {
+    // Crisp wooden seed click
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "sine";
+    const freq = 420 + Math.random() * 80;
+    osc.frequency.setValueAtTime(freq, now);
+    osc.frequency.exponentialRampToValueAtTime(80, now + 0.04);
+
+    gain.gain.setValueAtTime(0.35, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.04);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.045);
+  } else if (type === "capture") {
+    // Pleasant wooden chime / reward chord
+    [523.25, 659.25, 783.99].forEach((f, i) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "triangle";
+      osc.frequency.setValueAtTime(f, now + i * 0.05);
+
+      gain.gain.setValueAtTime(0, now + i * 0.05);
+      gain.gain.linearRampToValueAtTime(0.25, now + i * 0.05 + 0.01);
+      gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.05 + 0.25);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(now + i * 0.05);
+      osc.stop(now + i * 0.05 + 0.26);
+    });
+  } else if (type === "win") {
+    // Joyful African balafon arpeggio
+    const notes = [392, 440, 523.25, 587.33, 659.25, 783.99];
+    notes.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      const start = now + idx * 0.09;
+      osc.frequency.setValueAtTime(freq, start);
+
+      gain.gain.setValueAtTime(0.3, start);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.36);
+    });
+  } else if (type === "lose") {
+    // Gentle melancholic cadence
+    [440, 392, 349.23].forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      const gain = ctx.createGain();
+      osc.type = "sine";
+      const start = now + idx * 0.16;
+      osc.frequency.setValueAtTime(freq, start);
+
+      gain.gain.setValueAtTime(0.2, start);
+      gain.gain.exponentialRampToValueAtTime(0.001, start + 0.35);
+
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + 0.36);
+    });
+  } else if (type === "bump") {
+    // Soft invalid move thump
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.type = "triangle";
+    osc.frequency.setValueAtTime(140, now);
+    osc.frequency.exponentialRampToValueAtTime(60, now + 0.08);
+
+    gain.gain.setValueAtTime(0.2, now);
+    gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
+
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    osc.start(now);
+    osc.stop(now + 0.09);
+  }
+}
+
+function showToast(msg, duration = 3000) {
+  const toast = $("toast");
+  toast.textContent = msg;
+  toast.classList.add("show");
+  setTimeout(() => toast.classList.remove("show"), duration);
+}
+
+/* ==========================================================================
+   GAME ENGINE & LOGIC
+   ========================================================================== */
 function initialState() {
   return {
     board: Array(12).fill(4),
     scores: [0, 0],
     turn: HUMAN,
     over: false
+  };
+}
+
+function cloneState(s) {
+  return {
+    board: s.board.slice(),
+    scores: s.scores.slice(),
+    turn: s.turn,
+    over: s.over
   };
 }
 
@@ -441,7 +1047,6 @@ function legalMoves(state, player = state.turn) {
   return moves;
 }
 
-/* Pure move function, also used by the computer and daily generator. */
 function applyMove(state, pit) {
   const player = state.turn;
   const result = sow(state.board, pit);
@@ -459,8 +1064,7 @@ function applyMove(state, pit) {
   }
 
   const potential = capturePits.reduce((sum, p) => sum + board[p], 0);
-  const cancelled =
-    potential > 0 && potential === sideTotal(board, 1 - player);
+  const cancelled = potential > 0 && potential === sideTotal(board, 1 - player);
   const captured = cancelled ? 0 : potential;
 
   if (captured > 0) {
@@ -475,13 +1079,13 @@ function applyMove(state, pit) {
     over: false,
     captured,
     cancelled,
-    last: result.last
+    last: result.last,
+    capturePits: captured > 0 ? capturePits : []
   };
 }
 
 function stateKey(state) {
-  return state.board.join(",") + "|" +
-    state.scores.join(",") + "|" + state.turn;
+  return state.board.join(",") + "|" + state.scores.join(",") + "|" + state.turn;
 }
 
 function collectRemaining(state) {
@@ -494,13 +1098,13 @@ function checkEnd() {
   if (game.scores.some(score => score >= 25)) {
     endReason = "A player captured at least 25 seeds.";
   } else if (game.scores[0] === 24 && game.scores[1] === 24) {
-    endReason = "All 48 seeds have been shared equally.";
+    endReason = "All 48 seeds were shared equally (Draw).";
   } else if (legalMoves(game).length === 0) {
     collectRemaining(game);
     endReason = "No legal move remained. Seeds on each side were collected.";
   } else if ((repetitions.get(stateKey(game)) || 0) >= 3) {
     collectRemaining(game);
-    endReason = "The position repeated three times. Remaining seeds were collected.";
+    endReason = "The board position repeated three times. Remaining seeds were collected.";
   } else if (quietTurns >= 100) {
     collectRemaining(game);
     endReason = "100 turns passed without a capture. Remaining seeds were collected.";
@@ -509,10 +1113,39 @@ function checkEnd() {
   }
 
   game.over = true;
+  handleGameOver();
   return true;
 }
 
-/* Stable integer hash and PRNG: no Math.random() in daily positions. */
+function handleGameOver() {
+  const diff = game.scores[HUMAN] - game.scores[COMPUTER];
+  stats.played++;
+  stats.totalSeedsCaptured += game.scores[HUMAN];
+
+  if (diff > 0) {
+    stats.wins++;
+    stats.currentStreak++;
+    if (stats.currentStreak > stats.maxStreak) stats.maxStreak = stats.currentStreak;
+    playSound("win");
+  } else if (diff < 0) {
+    stats.losses++;
+    stats.currentStreak = 0;
+    playSound("lose");
+  } else {
+    stats.draws++;
+    playSound("lose");
+  }
+
+  if (mode === "daily") {
+    stats.dailyCompletedDates[challengeDate] = diff > 0 ? "win" : "played";
+  }
+
+  saveStats();
+}
+
+/* ==========================================================================
+   DAILY CHALLENGE SEEDING
+   ========================================================================== */
 function hashText(text) {
   let hash = 2166136261;
   for (let i = 0; i < text.length; i++) {
@@ -533,15 +1166,10 @@ function seededRandom(seed) {
 }
 
 function makeDaily(date) {
-  const random = seededRandom(hashText("ayo-daily-v1|" + date));
+  const random = seededRandom(hashText("ayo-daily-v2|" + date));
   let state = initialState();
   let candidate = initialState();
 
-  /*
-    Play an even number of legal opening turns.
-    Keep only nonterminal positions with the human to play.
-    Scores are preserved, so all 48 seeds remain accounted for.
-  */
   for (let step = 0; step < 16; step++) {
     const moves = legalMoves(state);
     if (!moves.length) break;
@@ -562,7 +1190,9 @@ function makeDaily(date) {
   return candidate;
 }
 
-/* Small deterministic minimax search: look two turns ahead. */
+/* ==========================================================================
+   AI (MINIMAX SEARCH WITH DIFFICULTY LEVELS)
+   ========================================================================== */
 function evaluate(state) {
   let human = state.scores[HUMAN];
   let computer = state.scores[COMPUTER];
@@ -577,37 +1207,52 @@ function evaluate(state) {
     return computer > human ? 10000 + computer : -10000 - human;
   }
 
-  return 20 * (computer - human) +
-    legalMoves(state, COMPUTER).length -
-    legalMoves(state, HUMAN).length;
+  // Heuristic: score differential + board mobility
+  return 25 * (computer - human) +
+    2 * (legalMoves(state, COMPUTER).length - legalMoves(state, HUMAN).length);
 }
 
-function minimax(state, depth) {
+function minimax(state, depth, alpha, beta) {
   const moves = legalMoves(state);
-  if (
-    depth === 0 || moves.length === 0 ||
-    state.scores.some(score => score >= 25)
-  ) {
+  if (depth === 0 || moves.length === 0 || state.scores.some(score => score >= 25)) {
     return evaluate(state);
   }
 
   const maximizing = state.turn === COMPUTER;
-  let best = maximizing ? -Infinity : Infinity;
-
-  for (const pit of moves) {
-    const value = minimax(applyMove(state, pit), depth - 1);
-    best = maximizing ? Math.max(best, value) : Math.min(best, value);
+  if (maximizing) {
+    let maxEval = -Infinity;
+    for (const pit of moves) {
+      const evaluation = minimax(applyMove(state, pit), depth - 1, alpha, beta);
+      maxEval = Math.max(maxEval, evaluation);
+      alpha = Math.max(alpha, evaluation);
+      if (beta <= alpha) break;
+    }
+    return maxEval;
+  } else {
+    let minEval = Infinity;
+    for (const pit of moves) {
+      const evaluation = minimax(applyMove(state, pit), depth - 1, alpha, beta);
+      minEval = Math.min(minEval, evaluation);
+      beta = Math.min(beta, evaluation);
+      if (beta <= alpha) break;
+    }
+    return minEval;
   }
-  return best;
 }
 
 function chooseComputerMove() {
   const moves = legalMoves(game);
+  if (!moves.length) return undefined;
+
+  const depth = Math.max(1, Math.min(3, parseInt(settings.aiDepth, 10) || 2));
   let bestPit = moves[0];
   let bestValue = -Infinity;
 
-  for (const pit of moves) {
-    const value = minimax(applyMove(game, pit), 1);
+  // Add small shuffle for variety
+  const shuffled = moves.slice().sort(() => Math.random() - 0.5);
+
+  for (const pit of shuffled) {
+    const value = minimax(applyMove(game, pit), depth - 1, -Infinity, Infinity);
     if (value > bestValue) {
       bestValue = value;
       bestPit = pit;
@@ -617,65 +1262,158 @@ function chooseComputerMove() {
 }
 
 function scheduleComputer() {
-  const currentGeneration = generation;
+  const currentGen = generation;
   computerTimer = setTimeout(() => {
     computerTimer = null;
-    if (
-      currentGeneration !== generation ||
-      game.over || game.turn !== COMPUTER
-    ) return;
+    if (currentGen !== generation || game.over || game.turn !== COMPUTER) return;
 
     const pit = chooseComputerMove();
     if (pit !== undefined) playMove(pit);
   }, 650);
 }
 
+/* ==========================================================================
+   MOVE EXECUTION & SOWING ANIMATION
+   ========================================================================== */
 function playMove(pit) {
-  if (game.over || !legalMoves(game).includes(pit)) return;
+  if (game.over || isSowingAnimation || !legalMoves(game).includes(pit)) {
+    playSound("bump");
+    return;
+  }
+
+  // Save for undo (Classic mode only)
+  if (mode === "classic" && game.turn === HUMAN) {
+    historyStack.push({
+      game: cloneState(game),
+      repetitions: new Map(repetitions),
+      quietTurns,
+      lastPit,
+      lastMessage
+    });
+    if (historyStack.length > 20) historyStack.shift();
+    updateUndoButton();
+  }
 
   const player = game.turn;
   const next = applyMove(game, pit);
   const name = player === HUMAN ? "You" : "Computer";
   const pitLabel = player === HUMAN ? pit + 1 : pit - 5;
 
-  lastMessage = name + " played pit " + pitLabel + ". ";
+  lastMessage = `${name} played pit ${pitLabel}. `;
   if (next.cancelled) {
     lastMessage += "Capture cancelled: it would empty the opponent's side.";
   } else if (next.captured > 0) {
-    lastMessage += next.captured + " seeds captured.";
+    lastMessage += `${next.captured} seeds captured!`;
   } else {
     lastMessage += "No capture.";
   }
 
-  quietTurns = next.captured > 0 ? 0 : quietTurns + 1;
-  lastPit = next.last;
-  game = next;
+  // Sowing animation
+  isSowingAnimation = true;
+  animateSowing(pit, next, () => {
+    isSowingAnimation = false;
+    quietTurns = next.captured > 0 ? 0 : quietTurns + 1;
+    lastPit = next.last;
+    game = next;
 
-  const key = stateKey(game);
-  repetitions.set(key, (repetitions.get(key) || 0) + 1);
-  checkEnd();
-  render();
+    if (next.captured > 0) playSound("capture");
 
-  if (!game.over && game.turn === COMPUTER) scheduleComputer();
+    const key = stateKey(game);
+    repetitions.set(key, (repetitions.get(key) || 0) + 1);
+    checkEnd();
+    render();
+
+    if (!game.over && game.turn === COMPUTER) scheduleComputer();
+  });
 }
 
+function animateSowing(startPit, nextState, callback) {
+  const count = game.board[startPit];
+  const trail = [];
+  let curr = startPit;
+  for (let i = 0; i < count; i++) {
+    curr = (curr + 1) % 12;
+    if (curr === startPit) curr = (curr + 1) % 12;
+    trail.push(curr);
+  }
+
+  let step = 0;
+  function stepAnim() {
+    if (step < trail.length) {
+      const pitIdx = trail[step];
+      playSound("seed");
+
+      // Highlight pit briefly
+      const btn = document.querySelector(`[data-pit="${pitIdx}"]`);
+      if (btn) {
+        btn.classList.add("sowing-active");
+        setTimeout(() => btn.classList.remove("sowing-active"), AYO_CONFIG.sowStepDelay - 10);
+      }
+      step++;
+      setTimeout(stepAnim, AYO_CONFIG.sowStepDelay);
+    } else {
+      // Flash captured pits if any
+      if (nextState.capturePits && nextState.capturePits.length > 0) {
+        nextState.capturePits.forEach(p => {
+          const btn = document.querySelector(`[data-pit="${p}"]`);
+          if (btn) btn.classList.add("capture-flash");
+        });
+        setTimeout(() => {
+          nextState.capturePits.forEach(p => {
+            const btn = document.querySelector(`[data-pit="${p}"]`);
+            if (btn) btn.classList.remove("capture-flash");
+          });
+          callback();
+        }, 400);
+      } else {
+        callback();
+      }
+    }
+  }
+
+  stepAnim();
+}
+
+function undoMove() {
+  if (mode !== "classic" || !historyStack.length || isSowingAnimation) return;
+  clearTimeout(computerTimer);
+
+  const prev = historyStack.pop();
+  game = prev.game;
+  repetitions = prev.repetitions;
+  quietTurns = prev.quietTurns;
+  lastPit = prev.lastPit;
+  lastMessage = "Move undone.";
+  endReason = "";
+  game.over = false;
+
+  render();
+  updateUndoButton();
+  showToast("Undid last move");
+}
+
+function updateUndoButton() {
+  $("undoButton").disabled = (mode !== "classic" || historyStack.length === 0 || isSowingAnimation);
+  $("undoButton").style.opacity = $("undoButton").disabled ? "0.5" : "1";
+}
+
+/* ==========================================================================
+   UI RENDERING
+   ========================================================================== */
 function makePit(pit, legal) {
   const button = document.createElement("button");
   const human = owns(pit, HUMAN);
   const count = game.board[pit];
   const label = human ? pit + 1 : pit - 5;
-  const playable = !game.over && game.turn === HUMAN &&
-    human && legal.includes(pit);
+  const playable = !game.over && !isSowingAnimation && game.turn === HUMAN && human && legal.includes(pit);
 
   button.type = "button";
-  button.className = "pit" +
-    (playable ? " legal" : "") +
-    (lastPit === pit ? " last" : "");
+  button.className = "pit" + (playable ? " legal" : "") + (lastPit === pit ? " last" : "");
   button.disabled = !playable;
+  button.dataset.pit = String(pit);
   button.setAttribute(
     "aria-label",
-    (human ? "Your" : "Computer") + " pit " + label +
-    ": " + count + " seeds" + (playable ? ". Tap to sow." : ".")
+    `${human ? "Your" : "Computer"} pit ${label}: ${count} seeds${playable ? ". Tap to sow." : "."}`
   );
 
   const countElement = document.createElement("span");
@@ -698,7 +1436,7 @@ function makePit(pit, legal) {
 
   button.append(countElement, seeds, number);
   button.addEventListener("click", () => {
-    if (game.turn === HUMAN && !game.over) playMove(pit);
+    if (game.turn === HUMAN && !game.over && !isSowingAnimation) playMove(pit);
   });
   return button;
 }
@@ -723,30 +1461,37 @@ function render() {
 
   if (game.over) {
     const difference = game.scores[HUMAN] - game.scores[COMPUTER];
-    const title = difference > 0 ? "You win!" :
-      difference < 0 ? "Computer wins — try again!" : "It's a draw!";
+    const title = difference > 0 ? "🎉 You Win!" :
+      difference < 0 ? "Computer Wins — Try Again!" : "It's a Draw!";
 
     $("status").textContent = title;
     $("detail").textContent = endReason;
-    $("resultTitle").textContent = difference > 0 ? "Well played!" :
-      difference < 0 ? "Another round?" : "An even match.";
+    $("resultTitle").textContent = difference > 0 ? "Spectacular Strategy!" :
+      difference < 0 ? "Close Game — Another Round?" : "An Even Match.";
     $("resultText").textContent =
-      "You: " + game.scores[HUMAN] +
-      " · Computer: " + game.scores[COMPUTER] +
-      (mode === "daily" ? " · Challenge " + challengeDate + " (UTC)" : "");
+      `Final Score — You: ${game.scores[HUMAN]}  |  Computer: ${game.scores[COMPUTER]}` +
+      (mode === "daily" ? ` · Challenge ${challengeDate} (UTC)` : "");
     $("againButton").textContent =
-      mode === "daily" ? "Play again · same challenge" : "Play again";
+      mode === "daily" ? "Play Today's Challenge Again" : "New Classic Game";
+
+    if (mode === "daily") {
+      $("countdownWrapper").hidden = false;
+      startCountdownTimer();
+    } else {
+      $("countdownWrapper").hidden = true;
+    }
     return;
   }
 
   $("status").textContent = game.turn === HUMAN ?
     "Your turn — choose a gold-edged pit" : "Computer is thinking…";
 
-  const feeding = game.turn === HUMAN &&
-    sideTotal(game.board, COMPUTER) === 0;
+  const feeding = game.turn === HUMAN && sideTotal(game.board, COMPUTER) === 0;
   $("detail").textContent = feeding ?
     lastMessage + " You must give the computer seeds." :
     lastMessage || "Collect more seeds than the computer. Capture 25 to win.";
+
+  updateUndoButton();
 }
 
 function startGame(nextMode, keepDailyDate = false) {
@@ -754,6 +1499,7 @@ function startGame(nextMode, keepDailyDate = false) {
   computerTimer = null;
   generation++;
   mode = nextMode;
+  historyStack = [];
 
   if (mode === "daily" && (!keepDailyDate || !challengeDate)) {
     challengeDate = new Date().toISOString().slice(0, 10);
@@ -769,30 +1515,149 @@ function startGame(nextMode, keepDailyDate = false) {
   $("classicButton").setAttribute("aria-pressed", String(mode === "classic"));
   $("dailyButton").setAttribute("aria-pressed", String(mode === "daily"));
   $("challenge").textContent = mode === "daily" ?
-    "Daily Challenge · " + challengeDate +
-      " (UTC) · Same starting position worldwide. You move first." :
-    "Classic game · Four seeds per pit · You move first";
+    `📅 Daily Challenge · ${challengeDate} (UTC) · Identical starting board worldwide` :
+    "🏺 Classic Ayo Game · 4 seeds per pit · You move first";
 
   render();
 }
 
+/* ==========================================================================
+   VIRAL SHARING (WORDLE STYLE)
+   ========================================================================== */
+function shareResults() {
+  const diff = game.scores[HUMAN] - game.scores[COMPUTER];
+  const outcome = diff > 0 ? "Won! 🏆" : diff < 0 ? "Lost" : "Draw 🤝";
+  const dateStr = mode === "daily" ? challengeDate : new Date().toISOString().slice(0, 10);
+
+  // Generate visual seed emojis based on score
+  const humanBlocks = Math.round((game.scores[HUMAN] / 48) * 8);
+  const compBlocks = 8 - humanBlocks;
+  const visualBar = "🟩".repeat(humanBlocks) + "🟫".repeat(compBlocks);
+
+  const text =
+`Ayo Daily 🏺 ${dateStr}
+Result: ${outcome} (${game.scores[HUMAN]} - ${game.scores[COMPUTER]})
+Mode: ${mode === "daily" ? "Daily Challenge" : "Classic"} (${$("aiDifficulty").selectedOptions[0].text})
+Board: ${visualBar}
+
+Play free on any browser:
+https://jamesabaa.github.io/ayo-daily/`;
+
+  if (navigator.share) {
+    navigator.share({
+      title: "Ayo Daily Result",
+      text: text,
+      url: "https://jamesabaa.github.io/ayo-daily/"
+    }).catch(() => copyToClipboard(text));
+  } else {
+    copyToClipboard(text);
+  }
+}
+
+function copyToClipboard(text) {
+  navigator.clipboard.writeText(text).then(() => {
+    showToast("📋 Result copied to clipboard!");
+  }).catch(() => {
+    showToast("Failed to copy. Share permission denied.");
+  });
+}
+
+/* ==========================================================================
+   COUNTDOWN TIMER (NEXT DAILY PUZZLE)
+   ========================================================================== */
+let countdownInterval = null;
+function startCountdownTimer() {
+  if (countdownInterval) clearInterval(countdownInterval);
+
+  function update() {
+    const now = new Date();
+    const tomorrow = new Date(Date.UTC(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate() + 1, 0, 0, 0));
+    const diff = tomorrow - now;
+
+    if (diff <= 0) {
+      $("countdownTimer").textContent = "New challenge ready! Refresh now.";
+      return;
+    }
+
+    const hours = String(Math.floor((diff / (1000 * 60 * 60)) % 24)).padStart(2, "0");
+    const minutes = String(Math.floor((diff / (1000 * 60)) % 60)).padStart(2, "0");
+    const seconds = String(Math.floor((diff / 1000) % 60)).padStart(2, "0");
+    $("countdownTimer").textContent = `${hours}:${minutes}:${seconds}`;
+  }
+
+  update();
+  countdownInterval = setInterval(update, 1000);
+}
+
+/* ==========================================================================
+   EVENT LISTENERS & MODAL MANAGEMENT
+   ========================================================================== */
 $("classicButton").addEventListener("click", () => startGame("classic"));
 $("dailyButton").addEventListener("click", () => startGame("daily"));
 $("againButton").addEventListener("click", () => startGame(mode, true));
+$("shareButton").addEventListener("click", shareResults);
+$("undoButton").addEventListener("click", undoMove);
 
-$("helpButton").addEventListener("click", () => $("rules").showModal());
-$("closeRules").addEventListener("click", () => $("rules").close());
-$("rules").addEventListener("click", event => {
-  if (event.target !== $("rules")) return;
-  const rect = $("rules").getBoundingClientRect();
-  if (
-    event.clientX < rect.left || event.clientX > rect.right ||
-    event.clientY < rect.top || event.clientY > rect.bottom
-  ) {
-    $("rules").close();
-  }
+$("aiDifficulty").addEventListener("change", (e) => {
+  settings.aiDepth = parseInt(e.target.value, 10);
+  saveSettings();
+  showToast(`AI difficulty set to: ${e.target.selectedOptions[0].text}`);
 });
 
+function updateSoundButton() {
+  $("soundIcon").textContent = settings.soundEnabled ? "🔊" : "🔇";
+}
+
+$("soundButton").addEventListener("click", () => {
+  settings.soundEnabled = !settings.soundEnabled;
+  saveSettings();
+  updateSoundButton();
+  showToast(settings.soundEnabled ? "Sound enabled 🔊" : "Sound muted 🔇");
+  if (settings.soundEnabled) playSound("seed");
+});
+
+// Modals setup
+function setupModal(buttonId, modalId, closeButtonId) {
+  const btn = $(buttonId);
+  const modal = $(modalId);
+  const closeBtn = $(closeButtonId);
+  if (!btn || !modal) return;
+
+  btn.addEventListener("click", () => modal.showModal());
+  if (closeBtn) closeBtn.addEventListener("click", () => modal.close());
+  modal.addEventListener("click", (e) => {
+    if (e.target === modal) modal.close();
+  });
+}
+
+setupModal("helpButton", "rulesModal", "closeRules");
+setupModal("statsButton", "statsModal", "closeStats");
+setupModal("openAbout", "aboutModal", "closeAbout");
+setupModal("openPrivacy", "privacyModal", "closePrivacy");
+setupModal("openTerms", "termsModal", "closeTerms");
+
+// Cookie banner handlers
+$("acceptCookies").addEventListener("click", () => {
+  localStorage.setItem("ayo_cookie_consent", "all");
+  $("cookieBanner").hidden = true;
+  showToast("Preferences saved.");
+});
+
+$("declineCookies").addEventListener("click", () => {
+  localStorage.setItem("ayo_cookie_consent", "essential");
+  $("cookieBanner").hidden = true;
+  showToast("Essential cookies only.");
+});
+
+// Register Service Worker for PWA
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("./sw.js").catch(() => {});
+  });
+}
+
+// Initial Boot
+loadPersistedData();
 startGame("classic");
 </script>
 </body>

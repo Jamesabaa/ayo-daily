@@ -1,0 +1,25 @@
+{
+  "name": "Ayo Daily — African Mancala Strategy Game",
+  "short_name": "Ayo Daily",
+  "description": "Play Ayo (Oware/Mancala) online daily. Test your strategy against the computer with daily seeded puzzles and classic matches.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eed6ac",
+  "theme_color": "#63351f",
+  "categories": ["games", "strategy", "board games", "puzzle"],
+  "icons": [
+    {
+      "src": "favicon.svg",
+      "sizes": "128x128",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
